@@ -5,6 +5,7 @@ import "./index.css";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
+import AuthGuard from "./components/guards/auth-guard";
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -22,7 +23,9 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <RouterProvider router={router} />
+      <AuthGuard>
+        <RouterProvider router={router} />
+      </AuthGuard>
     </StrictMode>,
   );
 }
