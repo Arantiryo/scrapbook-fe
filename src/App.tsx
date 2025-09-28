@@ -20,6 +20,8 @@ declare module "@tanstack/react-router" {
 function InnerApp() {
   const auth = useSupabaseAuth();
 
+  console.log("auth app", auth);
+
   if (auth.isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
