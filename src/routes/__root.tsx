@@ -1,4 +1,9 @@
-import { createRootRoute, Outlet } from "@tanstack/react-router";
+import type { SupabaseAuthState } from "@/components/auth/supabase";
+import {
+  // createRootRoute,
+  createRootRouteWithContext,
+  Outlet,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 const RootLayout = () => (
@@ -8,4 +13,6 @@ const RootLayout = () => (
   </>
 );
 
-export const Route = createRootRoute({ component: RootLayout });
+export const Route = createRootRouteWithContext<{
+  auth: SupabaseAuthState | undefined;
+}>()({ component: RootLayout });

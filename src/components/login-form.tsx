@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { supabase } from "@/components/guards/auth-guard";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,6 +19,7 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
+import { Route } from "@/routes/login";
 
 // Define the schema for form validation using Zod
 
@@ -39,6 +39,9 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const { auth } = Route.useRouteContext();
+  const { redirect } = Route.useSearch();
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,22 +54,14 @@ export function LoginForm({
   const { isDirty, isValid, isSubmitting, errors } = form.formState;
 
   const signInWithEmail = async (data: FormValues) => {
+    if (!auth) return;
+
     try {
-      const { data: authData, error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password,
-      });
-
-      if (error) {
-        console.error(error.message);
-        return;
-      }
-
-      if (authData?.session) {
-        console.log("session", authData.session);
-      }
-    } catch (error) {
-      console.error("Login error:", error);
+      await auth.login(data.email, data.password);
+      // Supabase auth will automatically update context
+      window.location.href = redirect;
+    } catch (err: unknown) {
+      console.log(err instanceof Error ? err.message : "Login failed");
     }
   };
 

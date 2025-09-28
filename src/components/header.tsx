@@ -6,7 +6,11 @@ function Header() {
       <Link to="/" className="[&.active]:font-bold">
         Home
       </Link>{" "}
-      <Link to="/login" className="[&.active]:font-bold">
+      <Link
+        search={{ redirect: "/" }}
+        to="/login"
+        className="[&.active]:font-bold"
+      >
         Login
       </Link>
     </div>
