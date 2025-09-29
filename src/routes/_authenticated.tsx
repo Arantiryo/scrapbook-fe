@@ -12,7 +12,6 @@ export const Route = createFileRoute("/_authenticated")({
 function RouteComponent() {
   return (
     <div>
-      Hello from authenticated route!
       <Outlet />
     </div>
   );

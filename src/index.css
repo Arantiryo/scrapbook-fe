@@ -135,3 +135,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Animations */
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
